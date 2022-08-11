@@ -1,0 +1,38 @@
+﻿@model DepartmentDetailsViewModel
+
+@{
+    Layout = "_Layout";
+}
+
+
+<div>
+    <h4>Department</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DepartmentName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DepartmentName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DepartmentDescription)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DepartmentDescription)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UniversityName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UniversityName)
+        </dd>
+        <dt class=" col-sm-10">
+            @Html.DisplayNameFor(model => model.Certificates)
+        </dt>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.DepartmentId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

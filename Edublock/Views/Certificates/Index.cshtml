@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Edublock.Models.Certificate>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TypeOfCertificate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Wallet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Department)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CertificateDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Grade)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeOfCertificate.TypeOfCertificateId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Wallet.WalletId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Department.DepartmentId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CertificateDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Grade)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CertificateId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CertificateId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CertificateId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

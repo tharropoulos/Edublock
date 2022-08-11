@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Edublock.Models.University>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UniversityName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UniversityDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ThumbnailUrl)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UniversityName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UniversityDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ThumbnailUrl)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.UniversityId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.UniversityId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.UniversityId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
