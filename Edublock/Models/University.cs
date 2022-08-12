@@ -6,5 +6,6 @@
         public string? Description { get; set; }
         public string? ThumbnailUrl { get; set; }
         public ICollection<Department> Departments { get; set; }
+        public ICollection<UserUniversityLink> UserLinks { get; set; }
     }
 }

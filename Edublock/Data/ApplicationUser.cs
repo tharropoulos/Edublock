@@ -12,5 +12,7 @@ namespace Edublock.Data
         public int? WalletId { get; set; }
         public Wallet? Wallet { get; set; }
 
+        public ICollection<UserUniversityLink> UniversityLinks { get; set; }
+
     }
 }

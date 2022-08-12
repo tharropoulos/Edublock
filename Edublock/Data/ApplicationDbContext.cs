@@ -37,5 +37,5 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<University> Universities { get; set; }
     public DbSet<Wallet> Wallets { get; set; }
     public DbSet<TypeOfCertificate> TypeOfCertificates { get; set; }
-
+    public DbSet<UserUniversityLink> UserUniversityLinks { get; set; }
 }
