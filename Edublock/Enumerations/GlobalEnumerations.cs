@@ -5,4 +5,11 @@
         Employee,
         Admin,
     }
+
+    public enum RequestState
+    {
+        Pending,
+        Completed,
+        Failed
+    }
 }

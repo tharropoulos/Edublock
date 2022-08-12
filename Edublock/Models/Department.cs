@@ -10,5 +10,6 @@
         
         public ICollection<Certificate> Certificates { get; set; }
         public ICollection<UserUniversityDepartmentLink> UserUniversityDepartmentLinks { get; set; }
+        public ICollection<RequestStatus> RequestStatuses { get; set; }
     }
 }

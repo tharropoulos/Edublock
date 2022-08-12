@@ -39,4 +39,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     public DbSet<TypeOfCertificate> TypeOfCertificates { get; set; }
     public DbSet<UserUniversityLink> UserUniversityLinks { get; set; }
     public DbSet<UserUniversityDepartmentLink> UserUniversityDepartmentLinks { get; set; }
+    public DbSet<Request> Requests { get; set; }
+    public DbSet<RequestStatus> RequestStatuses { get; set; }
 }
