@@ -36,7 +36,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     public DbSet<Certificate> Certificates { get; set; }
     public DbSet<University> Universities { get; set; }
     public DbSet<Wallet> Wallets { get; set; }
-    public DbSet<TypeOfCertificate> TypeOfCertificates { get; set; }
+    public DbSet<CertificateType> CertificateTypes { get; set; }
     public DbSet<UserUniversityLink> UserUniversityLinks { get; set; }
     public DbSet<UserUniversityDepartmentLink> UserUniversityDepartmentLinks { get; set; }
     public DbSet<Request> Requests { get; set; }

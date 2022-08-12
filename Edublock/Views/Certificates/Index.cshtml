@@ -13,7 +13,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.TypeOfCertificate)
+                @Html.DisplayNameFor(model => model.CertificateType)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Wallet)
@@ -34,7 +34,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.TypeOfCertificate.Id)
+                @Html.DisplayFor(modelItem => item.CertificateType.Id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Wallet.Id)

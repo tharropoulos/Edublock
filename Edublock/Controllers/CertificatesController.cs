@@ -24,7 +24,7 @@ namespace Edublock.Controllers
         // GET: Certificates
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Certificates.Include(c => c.Department).Include(c => c.TypeOfCertificate).Include(c => c.Wallet);
+            var applicationDbContext = _context.Certificates.Include(c => c.Department).Include(c => c.CertificateType).Include(c => c.Wallet);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -38,7 +38,7 @@ namespace Edublock.Controllers
 
             var certificate = await _context.Certificates
                 .Include(c => c.Department)
-                .Include(c => c.TypeOfCertificate)
+                .Include(c => c.CertificateType)
                 .Include(c => c.Wallet)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (certificate == null)
@@ -51,11 +51,11 @@ namespace Edublock.Controllers
 
         // GET: Certificates/Create
         public IActionResult Create()
-       
+
         {
             ViewData["UserId"] = new SelectList(_context.Users, nameof(ApplicationUser.Id), nameof(ApplicationUser.Email));
             ViewData["DepartmentId"] = new SelectList(_context.Departments, nameof(Department.Id), nameof(Department.Name));
-            ViewData["TypeOfCertificateId"] = new SelectList(_context.TypeOfCertificates, nameof(TypeOfCertificate.Id), nameof(TypeOfCertificate.Name));
+            ViewData["TypeOfCertificateId"] = new SelectList(_context.CertificateTypes, nameof(CertificateType.Id), nameof(CertificateType.Name));
             return View();
         }
 
@@ -74,7 +74,7 @@ namespace Edublock.Controllers
                 var dbCertificate = new Certificate
                 {
                     DepartmentId = certificate.DepartmentId,
-                    TypeOfCertificateId = certificate.TypeOfCertificateId,
+                    CertificateTypeId = certificate.TypeOfCertificateId,
                     WalletId = walletId ?? 0,
                     Grade = certificate.Grade,
                     CertificateDate = certificate.CertificateDate.ToDateTime(TimeOnly.MinValue),
@@ -84,7 +84,7 @@ namespace Edublock.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["DepartmentId"] = new SelectList(_context.Departments, nameof(Department.Id), nameof(Department.Name), certificate.DepartmentId);
-            ViewData["TypeOfCertificateId"] = new SelectList(_context.TypeOfCertificates, nameof(TypeOfCertificate.Id), nameof(TypeOfCertificate.Name), certificate.TypeOfCertificateId);
+            ViewData["TypeOfCertificateId"] = new SelectList(_context.CertificateTypes, nameof(CertificateType.Id), nameof(CertificateType.Name), certificate.TypeOfCertificateId);
             //ViewData["WalletId"] = new SelectList(_context.Wallets, "WalletId", nameof(Wallet.ApplicationUser.LastName), certificate.WalletId);
             return View(certificate);
         }
@@ -102,8 +102,8 @@ namespace Edublock.Controllers
             {
                 return NotFound();
             }
-            ViewData["DepartmentId"] = new SelectList(_context.Departments, "DepartmentId", "DepartmentId", certificate.DepartmentId);
-            ViewData["TypeOfCertificateId"] = new SelectList(_context.TypeOfCertificates, "TypeOfCertificateId", "TypeOfCertificateId", certificate.TypeOfCertificateId);
+            ViewData["DepartmentId"] = new SelectList(_context.Departments, nameof(Department.Id), nameof(Department.Name), certificate.DepartmentId);
+            ViewData["TypeOfCertificateId"] = new SelectList(_context.CertificateTypes, nameof(CertificateType.Id), nameof(CertificateType.Name), certificate.CertificateTypeId);
             ViewData["WalletId"] = new SelectList(_context.Wallets, "WalletId", "WalletId", certificate.WalletId);
             return View(certificate);
         }
@@ -141,7 +141,7 @@ namespace Edublock.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["DepartmentId"] = new SelectList(_context.Departments, "DepartmentId", "DepartmentId", certificate.DepartmentId);
-            ViewData["TypeOfCertificateId"] = new SelectList(_context.TypeOfCertificates, "TypeOfCertificateId", "TypeOfCertificateId", certificate.TypeOfCertificateId);
+            ViewData["TypeOfCertificateId"] = new SelectList(_context.CertificateTypes, "TypeOfCertificateId", "TypeOfCertificateId", certificate.CertificateTypeId);
             ViewData["WalletId"] = new SelectList(_context.Wallets, "WalletId", "WalletId", certificate.WalletId);
             return View(certificate);
         }
@@ -156,7 +156,7 @@ namespace Edublock.Controllers
 
             var certificate = await _context.Certificates
                 .Include(c => c.Department)
-                .Include(c => c.TypeOfCertificate)
+                .Include(c => c.CertificateType)
                 .Include(c => c.Wallet)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (certificate == null)
@@ -181,14 +181,14 @@ namespace Edublock.Controllers
             {
                 _context.Certificates.Remove(certificate);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CertificateExists(int id)
         {
-          return (_context.Certificates?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Certificates?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

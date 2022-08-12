@@ -8,8 +8,8 @@ namespace Edublock.Models
         public DateTime CertificateDate { get; set; }
         public float Grade { get; set; }
 
-        public int TypeOfCertificateId { get; set; }
-        public TypeOfCertificate TypeOfCertificate { get; set; } = default!;
+        public int CertificateTypeId { get; set; }
+        public CertificateType CertificateType { get; set; } = default!;
 
         public int WalletId { get; set; }
         public Wallet Wallet { get; set; } = default!;

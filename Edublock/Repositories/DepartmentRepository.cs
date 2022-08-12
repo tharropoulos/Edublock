@@ -47,7 +47,7 @@ namespace Edublock.Repositories
                                     {
                                         CertificateId = c.Id,
                                         CertificateDate = c.CertificateDate,
-                                        CertificateType = c.TypeOfCertificate.Name,
+                                        CertificateType = c.CertificateType.Name,
                                         DepartmentName = c.Department.Name
                                     }).ToList()
                 }).FirstOrDefaultAsync();
