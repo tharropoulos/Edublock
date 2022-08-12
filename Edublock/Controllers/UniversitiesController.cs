@@ -36,7 +36,7 @@ namespace Edublock.Controllers
             }
 
             var university = await _context.Universities
-                .FirstOrDefaultAsync(m => m.UniversityId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (university == null)
             {
                 return NotFound();
@@ -90,7 +90,7 @@ namespace Edublock.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("UniversityId,UniversityName,UniversityDescription,ThumbnailUrl")] University university)
         {
-            if (id != university.UniversityId)
+            if (id != university.Id)
             {
                 return NotFound();
             }
@@ -104,7 +104,7 @@ namespace Edublock.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UniversityExists(university.UniversityId))
+                    if (!UniversityExists(university.Id))
                     {
                         return NotFound();
                     }
@@ -127,7 +127,7 @@ namespace Edublock.Controllers
             }
 
             var university = await _context.Universities
-                .FirstOrDefaultAsync(m => m.UniversityId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (university == null)
             {
                 return NotFound();
@@ -157,7 +157,7 @@ namespace Edublock.Controllers
 
         private bool UniversityExists(int id)
         {
-          return (_context.Universities?.Any(e => e.UniversityId == id)).GetValueOrDefault();
+          return (_context.Universities?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

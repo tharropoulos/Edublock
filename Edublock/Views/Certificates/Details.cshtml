@@ -14,19 +14,19 @@
             @Html.DisplayNameFor(model => model.TypeOfCertificate)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TypeOfCertificate.TypeOfCertificateId)
+            @Html.DisplayFor(model => model.TypeOfCertificate.Id)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Wallet)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Wallet.WalletId)
+            @Html.DisplayFor(model => model.Wallet.Id)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Department)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Department.DepartmentId)
+            @Html.DisplayFor(model => model.Department.Id)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.CertificateDate)
@@ -43,6 +43,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.CertificateId">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

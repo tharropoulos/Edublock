@@ -2,12 +2,13 @@
 
 namespace Edublock.Models
 {
-    public class Wallet
+    public class Wallet : BaseEntity
     {
-        public int WalletId { get; set; }
-        public string? WalletDescription { get; set; }
+        public string? Description { get; set; }
+
         public string ApplicationUserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; } = default!;
+        
         public ICollection<Certificate>? Certificates { get; set; }
     }
 }

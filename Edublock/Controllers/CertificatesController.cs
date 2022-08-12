@@ -40,7 +40,7 @@ namespace Edublock.Controllers
                 .Include(c => c.Department)
                 .Include(c => c.TypeOfCertificate)
                 .Include(c => c.Wallet)
-                .FirstOrDefaultAsync(m => m.CertificateId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (certificate == null)
             {
                 return NotFound();
@@ -54,8 +54,8 @@ namespace Edublock.Controllers
        
         {
             ViewData["UserId"] = new SelectList(_context.Users, nameof(ApplicationUser.Id), nameof(ApplicationUser.Email));
-            ViewData["DepartmentId"] = new SelectList(_context.Departments, "DepartmentId", nameof(Department.DepartmentName));
-            ViewData["TypeOfCertificateId"] = new SelectList(_context.TypeOfCertificates, "TypeOfCertificateId", nameof(TypeOfCertificate.TypeOfCertificateName));
+            ViewData["DepartmentId"] = new SelectList(_context.Departments, nameof(Department.Id), nameof(Department.Name));
+            ViewData["TypeOfCertificateId"] = new SelectList(_context.TypeOfCertificates, nameof(TypeOfCertificate.Id), nameof(TypeOfCertificate.Name));
             return View();
         }
 
@@ -83,8 +83,8 @@ namespace Edublock.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DepartmentId"] = new SelectList(_context.Departments, "DepartmentId", "DepartmentId", certificate.DepartmentId);
-            ViewData["TypeOfCertificateId"] = new SelectList(_context.TypeOfCertificates, "TypeOfCertificateId", nameof(TypeOfCertificate.TypeOfCertificateName), certificate.TypeOfCertificateId);
+            ViewData["DepartmentId"] = new SelectList(_context.Departments, nameof(Department.Id), nameof(Department.Name), certificate.DepartmentId);
+            ViewData["TypeOfCertificateId"] = new SelectList(_context.TypeOfCertificates, nameof(TypeOfCertificate.Id), nameof(TypeOfCertificate.Name), certificate.TypeOfCertificateId);
             //ViewData["WalletId"] = new SelectList(_context.Wallets, "WalletId", nameof(Wallet.ApplicationUser.LastName), certificate.WalletId);
             return View(certificate);
         }
@@ -115,7 +115,7 @@ namespace Edublock.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("CertificateId,TypeOfCertificateId,WalletId,DepartmentId,CertificateDate,Grade")] Certificate certificate)
         {
-            if (id != certificate.CertificateId)
+            if (id != certificate.Id)
             {
                 return NotFound();
             }
@@ -129,7 +129,7 @@ namespace Edublock.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CertificateExists(certificate.CertificateId))
+                    if (!CertificateExists(certificate.Id))
                     {
                         return NotFound();
                     }
@@ -158,7 +158,7 @@ namespace Edublock.Controllers
                 .Include(c => c.Department)
                 .Include(c => c.TypeOfCertificate)
                 .Include(c => c.Wallet)
-                .FirstOrDefaultAsync(m => m.CertificateId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (certificate == null)
             {
                 return NotFound();
@@ -188,7 +188,7 @@ namespace Edublock.Controllers
 
         private bool CertificateExists(int id)
         {
-          return (_context.Certificates?.Any(e => e.CertificateId == id)).GetValueOrDefault();
+          return (_context.Certificates?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

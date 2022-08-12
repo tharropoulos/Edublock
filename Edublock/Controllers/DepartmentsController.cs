@@ -52,7 +52,7 @@ namespace Edublock.Controllers
         // GET: Departments/Create
         public IActionResult Create()
         {
-            ViewData["UniversityId"] = new SelectList(_context.Universities, nameof(University.UniversityId), nameof(University.UniversityName));
+            ViewData["UniversityId"] = new SelectList(_context.Universities, nameof(University.Id), nameof(University.Name));
             return View();
         }
 
@@ -67,8 +67,8 @@ namespace Edublock.Controllers
             {
                 var dbDepartment = new Department
                 {
-                    DepartmentName = department.DepartmentName,
-                    DepartmentDescription = department.DepartmentDescription,
+                    Name = department.DepartmentName,
+                    Description = department.DepartmentDescription,
                     UniversityId = department.UniversityId,
                 };
 
@@ -93,7 +93,7 @@ namespace Edublock.Controllers
             {
                 return NotFound();
             }
-            ViewData["UniversityId"] = new SelectList(_context.Universities, nameof(University.UniversityId), nameof(University.UniversityName), department.UniversityId);
+            ViewData["UniversityId"] = new SelectList(_context.Universities, nameof(University.Id), nameof(University.Name), department.UniversityId);
             return View(department);
         }
 
@@ -112,8 +112,8 @@ namespace Edublock.Controllers
             if (ModelState.IsValid)
             {
                 var dbDepartment = _context.Departments.Find(id);
-                dbDepartment.DepartmentName = department.DepartmentName;
-                dbDepartment.DepartmentDescription = department.DepartmentDescription;
+                dbDepartment.Name = department.DepartmentName;
+                dbDepartment.Description = department.DepartmentDescription;
                 dbDepartment.UniversityId = department.UniversityId;
                 _context.Entry(dbDepartment).State = EntityState.Modified;
                 _context.SaveChanges();
@@ -135,7 +135,7 @@ namespace Edublock.Controllers
                 //}
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UniversityId"] = new SelectList(_context.Universities, nameof(University.UniversityId), nameof(University.UniversityName), department.UniversityId);
+            ViewData["UniversityId"] = new SelectList(_context.Universities, nameof(University.Id), nameof(University.Name), department.UniversityId);
             return View(department);
         }
 
@@ -149,7 +149,7 @@ namespace Edublock.Controllers
 
             var department = await _context.Departments
                 .Include(d => d.University)
-                .FirstOrDefaultAsync(m => m.DepartmentId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (department == null)
             {
                 return NotFound();
@@ -179,7 +179,7 @@ namespace Edublock.Controllers
 
         private bool DepartmentExists(int id)
         {
-          return (_context.Departments?.Any(e => e.DepartmentId == id)).GetValueOrDefault();
+          return (_context.Departments?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

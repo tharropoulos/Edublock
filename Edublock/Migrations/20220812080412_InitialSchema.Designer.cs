@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Edublock.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220810102743_MaxLengthForUserNames")]
-    partial class MaxLengthForUserNames
+    [Migration("20220812080412_InitialSchema")]
+    partial class InitialSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,12 +44,10 @@ namespace Edublock.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -108,11 +106,11 @@ namespace Edublock.Migrations
 
             modelBuilder.Entity("Edublock.Models.Certificate", b =>
                 {
-                    b.Property<int>("CertificateId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CertificateId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("CertificateDate")
                         .HasColumnType("datetime2");
@@ -126,10 +124,16 @@ namespace Edublock.Migrations
                     b.Property<int>("TypeOfCertificateId")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserIdCreated")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserIdUpdated")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("WalletId")
                         .HasColumnType("int");
 
-                    b.HasKey("CertificateId");
+                    b.HasKey("Id");
 
                     b.HasIndex("DepartmentId");
 
@@ -142,23 +146,28 @@ namespace Edublock.Migrations
 
             modelBuilder.Entity("Edublock.Models.Department", b =>
                 {
-                    b.Property<int>("DepartmentId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DepartmentId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("DepartmentDescription")
+                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DepartmentName")
-                        .IsRequired()
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UniversityId")
                         .HasColumnType("int");
 
-                    b.HasKey("DepartmentId");
+                    b.Property<string>("UserIdCreated")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserIdUpdated")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("UniversityId");
 
@@ -167,63 +176,78 @@ namespace Edublock.Migrations
 
             modelBuilder.Entity("Edublock.Models.TypeOfCertificate", b =>
                 {
-                    b.Property<int>("TypeOfCertificateId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TypeOfCertificateId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("TypeOfCertificateDescription")
+                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TypeOfCertificateName")
-                        .IsRequired()
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("TypeOfCertificateId");
+                    b.Property<string>("UserIdCreated")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserIdUpdated")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.ToTable("TypeOfCertificates");
                 });
 
             modelBuilder.Entity("Edublock.Models.University", b =>
                 {
-                    b.Property<int>("UniversityId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UniversityId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ThumbnailUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UniversityDescription")
+                    b.Property<string>("UserIdCreated")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UniversityName")
-                        .IsRequired()
+                    b.Property<string>("UserIdUpdated")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UniversityId");
+                    b.HasKey("Id");
 
                     b.ToTable("Universities");
                 });
 
             modelBuilder.Entity("Edublock.Models.Wallet", b =>
                 {
-                    b.Property<int>("WalletId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WalletId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("ApplicationUserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("WalletDescription")
+                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("WalletId");
+                    b.Property<string>("UserIdCreated")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserIdUpdated")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Wallets");
                 });
@@ -476,8 +500,7 @@ namespace Edublock.Migrations
 
             modelBuilder.Entity("Edublock.Models.Wallet", b =>
                 {
-                    b.Navigation("ApplicationUser")
-                        .IsRequired();
+                    b.Navigation("ApplicationUser");
 
                     b.Navigation("Certificates");
                 });

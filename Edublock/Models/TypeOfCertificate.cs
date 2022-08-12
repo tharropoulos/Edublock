@@ -1,11 +1,9 @@
 ﻿namespace Edublock.Models
 {
-    public class TypeOfCertificate
+    public class TypeOfCertificate : BaseEntity
     {
-        public int TypeOfCertificateId { get; set; }
-        public string TypeOfCertificateName { get; set; } = string.Empty;
-
-        public string? TypeOfCertificateDescription { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string? Description { get; set; }
 
         public ICollection<Certificate>? Certificates { get; set; }
     }

@@ -1,11 +1,10 @@
 ﻿namespace Edublock.Models
 {
-    public class University
+    public class University : BaseEntity
     {
-        public int UniversityId { get; set; }
-        public string UniversityName { get; set; } = string.Empty;
-        public string? UniversityDescription { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string? Description { get; set; }
         public string? ThumbnailUrl { get; set; }
-        public ICollection<Department>? Departments { get; set; }
+        public ICollection<Department> Departments { get; set; }
     }
 }
