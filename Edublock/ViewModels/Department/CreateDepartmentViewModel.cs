@@ -1,7 +1,7 @@
 ﻿using Edublock.Models;
-namespace Edublock.ViewModels
+namespace Edublock.ViewModels.Department
 {
-    public class CreateDepartmentViewModel
+    public class CreateDepartmentViewModel : DepartmentBaseViewModel
     {
         public string DepartmentName { get; set; } = string.Empty;
 

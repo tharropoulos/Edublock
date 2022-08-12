@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 
-namespace Edublock.ViewModels
+namespace Edublock.ViewModels.Department
 {
-    public class DepartmentListViewModel
+    public class DepartmentListViewModel : DepartmentBaseViewModel
     {
         public int DepartmentId { get; set; }
         [DisplayName("Department Name")]

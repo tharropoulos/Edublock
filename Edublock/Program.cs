@@ -4,6 +4,8 @@ using Edublock.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Edublock.Repositories.IRepositories;
 using Edublock.Repositories;
+using Edublock.Services;
+using Edublock.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
@@ -32,6 +34,8 @@ builder.Services.AddSession();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+builder.Services.AddScoped<ICertificateTypeRepository, CertificateTypeRepository>();
+builder.Services.AddScoped<ICertificateTypeService, CertificateTypeService>();
 
 var app = builder.Build();
 

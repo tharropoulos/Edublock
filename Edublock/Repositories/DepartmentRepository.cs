@@ -4,6 +4,7 @@ using Edublock.Repositories.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using Edublock.Models;
 using Edublock.ViewModels.Department;
+using System.Linq.Expressions;
 
 namespace Edublock.Repositories
 {
@@ -67,6 +68,51 @@ namespace Edublock.Repositories
             };
             return department;
 
+        }
+
+        public Task<Department> GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<Department>> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Add(Department entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(Department entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(Department entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<Department> GetQuery()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task Save()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> Exists(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<Department> GetQueryWithPredicate(Expression<Func<Department, bool>> predicate)
+        {
+            throw new NotImplementedException();
         }
 
         //public Department EditDepartment(int id, EditDepartmentViewModel editDepartmentViewModel)

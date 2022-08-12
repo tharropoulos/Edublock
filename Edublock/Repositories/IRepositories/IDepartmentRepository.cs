@@ -3,7 +3,7 @@ using Edublock.ViewModels;
 
 namespace Edublock.Repositories.IRepositories
 {
-    public interface IDepartmentRepository
+    public interface IDepartmentRepository : IRepository<Department>
     {
         Task<IEnumerable<DepartmentListViewModel>> GetAllDepartments();
         Task<DepartmentDetailsViewModel>? GetDepartmentById(int? id);
