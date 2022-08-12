@@ -22,7 +22,7 @@ builder.Services.AddHttpContextAccessor();
 
 
 //options => options.SignIn.RequireConfirmedAccount = true
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
     .AddDefaultUI()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();

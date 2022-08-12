@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Edublock.Data;
 
-public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
@@ -38,4 +38,5 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Wallet> Wallets { get; set; }
     public DbSet<TypeOfCertificate> TypeOfCertificates { get; set; }
     public DbSet<UserUniversityLink> UserUniversityLinks { get; set; }
+    public DbSet<UserUniversityDepartmentLink> UserUniversityDepartmentLinks { get; set; }
 }

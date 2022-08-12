@@ -9,5 +9,6 @@
         public University University { get; set; }
         
         public ICollection<Certificate> Certificates { get; set; }
+        public ICollection<UserUniversityDepartmentLink> UserUniversityDepartmentLinks { get; set; }
     }
 }
