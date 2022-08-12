@@ -13,6 +13,7 @@ namespace Edublock.Data
         public Wallet? Wallet { get; set; }
 
         public ICollection<UserUniversityLink> UniversityLinks { get; set; }
+        public ICollection<Request> Requests { get; set; }
 
     }
 }
