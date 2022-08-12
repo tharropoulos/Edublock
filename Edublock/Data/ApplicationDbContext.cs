@@ -41,4 +41,5 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     public DbSet<UserUniversityDepartmentLink> UserUniversityDepartmentLinks { get; set; }
     public DbSet<Request> Requests { get; set; }
     public DbSet<RequestStatus> RequestStatuses { get; set; }
+    public DbSet<RequestsLog> RequestsLogs { get; set; }
 }

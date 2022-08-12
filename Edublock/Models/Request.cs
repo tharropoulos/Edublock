@@ -11,5 +11,7 @@ namespace Edublock.Models
 
         public int RequestStatusId { get; set; }
         public RequestStatus RequestStatus { get; set; }
+
+        public ICollection<RequestsLog> RequestsLogs { get; set; }
     }
 }
