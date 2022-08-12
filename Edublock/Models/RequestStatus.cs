@@ -12,5 +12,6 @@ namespace Edublock.Models
         public Department Department { get; set; }
 
         public ICollection<Request> Requests { get; set; }
+        public ICollection<RequestsLog> RequestsLogs { get; set; }
     }
 }
