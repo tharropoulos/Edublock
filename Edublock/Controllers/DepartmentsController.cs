@@ -10,43 +10,45 @@ using Edublock.Models;
 using Edublock.ViewModels;
 using Edublock.Repositories.IRepositories;
 using Edublock.ViewModels.Department;
+using Edublock.Services.Interfaces;
 
 namespace Edublock.Controllers
 {
     public class DepartmentsController : Controller
     {
+        private readonly IDepartmentService _departmentService;
         private readonly ApplicationDbContext _context;
-        private readonly IDepartmentRepository _departmentRepository;
 
-        public DepartmentsController(ApplicationDbContext context, IDepartmentRepository departmentRepository)
+        public DepartmentsController(IDepartmentService departmentService, ApplicationDbContext context)
         {
+            _departmentService = departmentService;
             _context = context;
-            _departmentRepository = departmentRepository;
         }
+
 
 
         // GET: Departments
         public async Task<IActionResult> Index()
         {
-            var departmentListViewModel = _departmentRepository.GetAllDepartments();
-            return View(await departmentListViewModel);
+            var departmentListViewModel = await _departmentService.ListAllViewModels();
+            return View(departmentListViewModel);
         }
 
         // GET: Departments/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Departments == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var departmentDetailsViewModel = _departmentRepository.GetDepartmentById(id);
+            var departmentDetailsViewModel = await _departmentService.GetDetailsViewModel(id.Value);
             if (departmentDetailsViewModel == null)
             {
                 return NotFound();
             }
 
-            return View(await departmentDetailsViewModel);
+            return View(departmentDetailsViewModel);
         }
 
         // GET: Departments/Create
@@ -61,22 +63,14 @@ namespace Edublock.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DepartmentId,DepartmentName,DepartmentDescription,UniversityId")] CreateDepartmentViewModel department)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,UniversityId")] DepartmentCreateViewModel department)
         {
             if (ModelState.IsValid)
             {
-                var dbDepartment = new Department
-                {
-                    Name = department.DepartmentName,
-                    Description = department.DepartmentDescription,
-                    UniversityId = department.UniversityId,
-                };
-
-                _context.Add(dbDepartment);
-                await _context.SaveChangesAsync();
+                await _departmentService.CreateFromViewModel(department);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UniversityId"] = new SelectList(_context.Universities, "UniversityId", "UniversityId", department.UniversityId);
+            ViewData["UniversityId"] = new SelectList(_context.Universities, nameof(University.Id), nameof(University.Name), department.UniversityId);
             return View(department);
         }
 
@@ -88,7 +82,7 @@ namespace Edublock.Controllers
                 return NotFound();
             }
 
-            var department = await _departmentRepository.GetDepartmentById(id);
+            var department = await _departmentService.GetEditViewModel(id.Value);
             if (department == null)
             {
                 return NotFound();
@@ -102,7 +96,7 @@ namespace Edublock.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DepartmentId,DepartmentName,DepartmentDescription,UniversityId")] EditDepartmentViewModel department)
+        public async Task<IActionResult> Edit(int id, [Bind("DepartmentId,DepartmentName,DepartmentDescription,UniversityId")] DepartmentEditViewModel department)
         {
             if (id != department.DepartmentId)
             {
