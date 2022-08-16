@@ -1,4 +1,4 @@
-﻿@model Edublock.Models.Department
+﻿@model Edublock.ViewModels.Department.DepartmentEditViewModel
 
 @{
     Layout = "_Layout";
@@ -24,12 +24,6 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.University)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.University.Id)
         </dd>
     </dl>
     
