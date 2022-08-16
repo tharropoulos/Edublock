@@ -56,7 +56,8 @@ namespace Edublock.Services
             {
                 Name= department.Name,
                 Id = department.Id,
-                Description = department.Description
+                Description = department.Description,
+                UniversityId= department.UniversityId
             };
             return departmentEditViewModel;
         }
@@ -102,5 +103,7 @@ namespace Edublock.Services
                 }
             }
         }
+
+
     }
 }

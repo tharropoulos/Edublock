@@ -1,4 +1,6 @@
 ﻿using Edublock.Models;
+using System.ComponentModel;
+
 namespace Edublock.ViewModels.Department
 {
     public class DepartmentCreateViewModel : DepartmentBaseViewModel

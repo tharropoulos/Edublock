@@ -16,13 +16,11 @@ namespace Edublock.Controllers
 {
     public class CertificateTypesController : Controller
     {
-        private readonly ICertificateTypeRepository _repository;
         private readonly ICertificateTypeService _certificateTypeService;
         
 
-        public CertificateTypesController(ICertificateTypeRepository repository, ICertificateTypeService certificateTypeService)
+        public CertificateTypesController(ICertificateTypeService certificateTypeService)
         {
-            _repository = repository;
             _certificateTypeService = certificateTypeService;
         }
 

@@ -77,7 +77,7 @@ namespace Edublock.Controllers
         // GET: Departments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Departments == null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -98,19 +98,14 @@ namespace Edublock.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("DepartmentId,DepartmentName,DepartmentDescription,UniversityId")] DepartmentEditViewModel department)
         {
-            if (id != department.DepartmentId)
+            if (id != department.Id)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                var dbDepartment = _context.Departments.Find(id);
-                dbDepartment.Name = department.DepartmentName;
-                dbDepartment.Description = department.DepartmentDescription;
-                dbDepartment.UniversityId = department.UniversityId;
-                _context.Entry(dbDepartment).State = EntityState.Modified;
-                _context.SaveChanges();
+                await _departmentService.UpdateFromEditVieModel(department);
                 //try
                 //{
                 //    _context.Update(department);

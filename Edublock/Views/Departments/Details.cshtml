@@ -1,4 +1,4 @@
-﻿@model DepartmentDetailsViewModel
+﻿@model Edublock.ViewModels.Department.DepartmentDetailsViewModel
 
 @{
     Layout = "_Layout";
@@ -10,16 +10,16 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DepartmentName)
+            @Html.DisplayNameFor(model => model.Name)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DepartmentName)
+            @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DepartmentDescription)
+            @Html.DisplayNameFor(model => model.Description)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DepartmentDescription)
+            @Html.DisplayFor(model => model.Description)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.UniversityName)
@@ -27,12 +27,12 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.UniversityName)
         </dd>
-        <dt class=" col-sm-10">
-            @Html.DisplayNameFor(model => model.Certificates)
-        </dt>
+        @*<dt class=" col-sm-10">
+            @Html.DisplayNameFor(model => model.)
+        </dt>*@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.DepartmentId">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace Edublock.Repositories
 {
-    public class DepartmentRepository : IDepartmentRepository
+    public class DepartmentRepository : BaseRepository<Department>, IDepartmentRepository
     {
         private readonly ApplicationDbContext _context;
         public DepartmentRepository(ApplicationDbContext context) : base(context)

@@ -34,6 +34,7 @@ builder.Services.AddSession();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<ICertificateTypeRepository, CertificateTypeRepository>();
 builder.Services.AddScoped<ICertificateTypeService, CertificateTypeService>();
 
