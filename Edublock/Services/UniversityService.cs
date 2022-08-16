@@ -30,6 +30,7 @@ namespace Edublock.Services
             {
                 Name = u.Name,
                 Description = u.Description,
+                Id = u.Id,
             }).ToList();
             return univeristyListViewModels;
 

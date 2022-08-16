@@ -10,10 +10,10 @@ namespace Edublock.Data
 
         [ForeignKey("Wallet")]
         public int? WalletId { get; set; }
-        public Wallet? Wallet { get; set; }
+        public virtual  Wallet Wallet { get; set; }
 
-        public ICollection<UserUniversityLink> UniversityLinks { get; set; }
-        public ICollection<Request> Requests { get; set; }
+        public virtual ICollection<UserUniversityLink> UniversityLinks { get; set; }
+        public virtual ICollection<Request> Requests { get; set; }
 
     }
 }

@@ -21,7 +21,13 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
 
         builder.ApplyConfiguration(new ApplicationUserEntityConfiguration());
     }
-    
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseLazyLoadingProxies();
+    }
+
+
     public class ApplicationUserEntityConfiguration : IEntityTypeConfiguration<ApplicationUser>
     {
         public void Configure(EntityTypeBuilder<ApplicationUser> builder)

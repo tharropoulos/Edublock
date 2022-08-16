@@ -1,4 +1,4 @@
-﻿@model Edublock.Models.University
+﻿@model Edublock.ViewModels.University.UniversityDetailsViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -21,13 +21,13 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThumbnailUrl)
+        </dd><dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NumberOfDepartments)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThumbnailUrl)
+            @Html.DisplayFor(model => model.NumberOfDepartments)
         </dd>
+
     </dl>
 </div>
 <div>

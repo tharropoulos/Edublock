@@ -9,6 +9,7 @@ namespace Edublock.Services.Interfaces
         Task<List<DepartmentListViewModel>> ListAllViewModels();
         Task<DepartmentDetailsViewModel> GetDetailsViewModel(int id);
         Task<DepartmentEditViewModel> GetEditViewModel(int id);
+        Task<DepartmentEditViewModel> DeleteFromEditViewModel(DepartmentEditViewModel editViewModel);
         Task<DepartmentEditViewModel> UpdateFromEditVieModel(DepartmentEditViewModel editViewModel);    
     }
 }

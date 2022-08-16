@@ -4,11 +4,11 @@ namespace Edublock.Models
 {
     public class Wallet : BaseEntity
     {
-        public string? Description { get; set; }
+        public string Description { get; set; }
 
         public string ApplicationUserId { get; set; }
-        public ApplicationUser ApplicationUser { get; set; } = default!;
+        public virtual ApplicationUser ApplicationUser { get; set; } = default!;
         
-        public ICollection<Certificate>? Certificates { get; set; }
+        public virtual ICollection<Certificate> Certificates { get; set; }
     }
 }

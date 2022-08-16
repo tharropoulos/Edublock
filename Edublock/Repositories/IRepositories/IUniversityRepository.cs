@@ -1,6 +1,10 @@
-﻿namespace Edublock.Repositories.IRepositories
+﻿using Edublock.Models;
+using Edublock.ViewModels;
+
+namespace Edublock.Repositories.IRepositories
 {
-    public class IUniversityRepository : IRepository<University>
+    public interface IUniversityRepository : IRepository<University>
     {
+
     }
 }

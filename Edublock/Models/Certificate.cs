@@ -9,12 +9,12 @@ namespace Edublock.Models
         public float Grade { get; set; }
 
         public int CertificateTypeId { get; set; }
-        public CertificateType CertificateType { get; set; } = default!;
+        public virtual CertificateType CertificateType { get; set; } = default!;
 
         public int WalletId { get; set; }
-        public Wallet Wallet { get; set; } = default!;
+        public virtual Wallet Wallet { get; set; } = default!;
 
         public int DepartmentId { get; set; }
-        public Department Department { get; set; } = default!;
+        public virtual Department Department { get; set; } = default!;
     }
 }

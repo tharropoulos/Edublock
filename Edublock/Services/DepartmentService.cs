@@ -42,6 +42,17 @@ namespace Edublock.Services
             };
             return departmentDetailsViewModel;
         }
+        public async Task<List<DepartmentListViewModel>> ListAllViewModels()
+        {
+            var departmentList =  await _repository.GetQuery().Include(d => d.University).Select(d => new DepartmentListViewModel
+            {
+                Name = d.Name,
+                Description = d.Description,
+                Id = d.Id,
+                UniversityName = d.University.Name
+            }).ToListAsync();
+            return departmentList;
+        }
 
         public async Task<DepartmentEditViewModel> GetEditViewModel(int id)
         {
@@ -62,17 +73,6 @@ namespace Edublock.Services
             return departmentEditViewModel;
         }
 
-        public async Task<List<DepartmentListViewModel>> ListAllViewModels()
-        {
-            var departmentList =  await _repository.GetQuery().Include(d => d.University).Select(d => new DepartmentListViewModel
-            {
-                Name = d.Name,
-                Description = d.Description,
-                Id = d.Id,
-                UniversityName = d.University.Name
-            }).ToListAsync();
-            return departmentList;
-        }
 
         public async Task<DepartmentEditViewModel> UpdateFromEditVieModel(DepartmentEditViewModel editViewModel)
         {
@@ -104,6 +104,15 @@ namespace Edublock.Services
             }
         }
 
-
+        public async Task<DepartmentEditViewModel> DeleteFromEditViewModel(DepartmentEditViewModel editViewModel)
+        {
+            var department = await _repository.GetById(editViewModel.Id);
+            if (department != null)
+            {
+                _repository.Delete(department);
+            }
+            await _repository.Save();
+            return editViewModel;
+        }
     }
 }

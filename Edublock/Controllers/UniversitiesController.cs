@@ -7,36 +7,36 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Edublock.Data;
 using Edublock.Models;
+using Edublock.ViewModels.University;
+using Edublock.Services.Interfaces;
 
 namespace Edublock.Controllers
 {
     public class UniversitiesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IUniversityService _universityService;
 
-        public UniversitiesController(ApplicationDbContext context)
+        public UniversitiesController(IUniversityService universityService)
         {
-            _context = context;
+            _universityService = universityService;
         }
 
         // GET: Universities
         public async Task<IActionResult> Index()
         {
-              return _context.Universities != null ? 
-                          View(await _context.Universities.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Universities'  is null.");
+              return View(await _universityService.ListAllViewModels());
         }
 
         // GET: Universities/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Universities == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var university = await _context.Universities
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var university = await _universityService.GetDetailsViewModel(id.Value);
+
             if (university == null)
             {
                 return NotFound();
@@ -56,12 +56,11 @@ namespace Edublock.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UniversityId,UniversityName,UniversityDescription,ThumbnailUrl")] University university)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,ThumbnailUrl")] UniversityCreateViewModel university)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(university);
-                await _context.SaveChangesAsync();
+                await _universityService.CreateFromViewModel(university);
                 return RedirectToAction(nameof(Index));
             }
             return View(university);
@@ -70,12 +69,12 @@ namespace Edublock.Controllers
         // GET: Universities/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Universities == null)
+            if ((id ?? 0) == 0)
             {
                 return NotFound();
             }
 
-            var university = await _context.Universities.FindAsync(id);
+            var university = await _universityService.GetEditViewModel(id.Value);
             if (university == null)
             {
                 return NotFound();
@@ -88,7 +87,7 @@ namespace Edublock.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UniversityId,UniversityName,UniversityDescription,ThumbnailUrl")] University university)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,ThumbnailUrl")] UniversityEditViewModel university)
         {
             if (id != university.Id)
             {
@@ -97,22 +96,7 @@ namespace Edublock.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(university);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UniversityExists(university.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                await _universityService.UpdateFromEditViewModel(university);
                 return RedirectToAction(nameof(Index));
             }
             return View(university);
@@ -121,13 +105,13 @@ namespace Edublock.Controllers
         // GET: Universities/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Universities == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var university = await _context.Universities
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var university = await _universityService.GetEditViewModel(id.Value);
+
             if (university == null)
             {
                 return NotFound();
@@ -139,25 +123,14 @@ namespace Edublock.Controllers
         // POST: Universities/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, UniversityEditViewModel university)
         {
-            if (_context.Universities == null)
+            if (id != university.Id)
             {
-                return Problem("Entity set 'ApplicationDbContext.Universities'  is null.");
+                return NotFound();
             }
-            var university = await _context.Universities.FindAsync(id);
-            if (university != null)
-            {
-                _context.Universities.Remove(university);
-            }
-            
-            await _context.SaveChangesAsync();
+            await _universityService.DeleteFromEditViewModel(university);
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool UniversityExists(int id)
-        {
-          return (_context.Universities?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

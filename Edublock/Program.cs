@@ -37,6 +37,8 @@ builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<ICertificateTypeRepository, CertificateTypeRepository>();
 builder.Services.AddScoped<ICertificateTypeService, CertificateTypeService>();
+builder.Services.AddScoped<IUniversityRepository, UniversityRepository>();
+builder.Services.AddScoped<IUniversityService, UniversityService>();
 
 var app = builder.Build();
 

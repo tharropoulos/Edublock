@@ -7,11 +7,11 @@ namespace Edublock.Models
         public string Details { get; set; }
 
         public string UserId { get; set; }
-        public ApplicationUser User { get; set; }
+        public virtual ApplicationUser User { get; set; }
 
         public int RequestStatusId { get; set; }
-        public RequestStatus RequestStatus { get; set; }
+        public virtual RequestStatus RequestStatus { get; set; }
 
-        public ICollection<RequestsLog> RequestsLogs { get; set; }
+        public virtual ICollection<RequestsLog> RequestsLogs { get; set; }
     }
 }

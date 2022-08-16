@@ -96,7 +96,7 @@ namespace Edublock.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DepartmentId,DepartmentName,DepartmentDescription,UniversityId")] DepartmentEditViewModel department)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,UniversityId")] DepartmentEditViewModel department)
         {
             if (id != department.Id)
             {
@@ -106,22 +106,6 @@ namespace Edublock.Controllers
             if (ModelState.IsValid)
             {
                 await _departmentService.UpdateFromEditVieModel(department);
-                //try
-                //{
-                //    _context.Update(department);
-                //    await _context.SaveChangesAsync();
-                //}
-                //catch (DbUpdateConcurrencyException)
-                //{
-                //    if (!DepartmentExists(department.DepartmentId))
-                //    {
-                //        return NotFound();
-                //    }
-                //    else
-                //    {
-                //        throw;
-                //    }
-                //}
                 return RedirectToAction(nameof(Index));
             }
             ViewData["UniversityId"] = new SelectList(_context.Universities, nameof(University.Id), nameof(University.Name), department.UniversityId);
@@ -131,14 +115,14 @@ namespace Edublock.Controllers
         // GET: Departments/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Departments == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var department = await _context.Departments
-                .Include(d => d.University)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var department = await _departmentService.GetEditViewModel(id.Value);
+            
+
             if (department == null)
             {
                 return NotFound();
@@ -150,19 +134,13 @@ namespace Edublock.Controllers
         // POST: Departments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Departments == null)
+        public async Task<IActionResult> DeleteConfirmed(int id, DepartmentEditViewModel editviewModel)
+        { 
+            if (id != editviewModel.Id)
             {
-                return Problem("Entity set 'ApplicationDbContext.Departments'  is null.");
+                return NotFound();
             }
-            var department = await _context.Departments.FindAsync(id);
-            if (department != null)
-            {
-                _context.Departments.Remove(department);
-            }
-            
-            await _context.SaveChangesAsync();
+            await _departmentService.DeleteFromEditViewModel(editviewModel);
             return RedirectToAction(nameof(Index));
         }
 
