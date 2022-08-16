@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Edublock.Data;
 using Edublock.Models;
-using Edublock.Repositories.IRepositories;
+using Edublock.Repositories.Interfaces;
 using Edublock.ViewModels.CertificateType;
 using Edublock.Services;
 using Edublock.Services.Interfaces;

@@ -1,6 +1,6 @@
 ﻿using Edublock.Data;
 using Edublock.Models;
-using Edublock.Repositories.IRepositories;
+using Edublock.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 

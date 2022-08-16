@@ -1,7 +1,7 @@
 ﻿using Edublock.Models;
 using System.Linq.Expressions;
 
-namespace Edublock.Repositories.IRepositories
+namespace Edublock.Repositories.Interfaces
 {
     public interface IRepository<T> where T : BaseEntity
     {

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Edublock.Data;
 using Edublock.Models;
 using Edublock.ViewModels;
-using Edublock.Repositories.IRepositories;
+using Edublock.Repositories.Interfaces;
 using Edublock.ViewModels.Department;
 using Edublock.Services.Interfaces;
 
@@ -59,8 +59,6 @@ namespace Edublock.Controllers
         }
 
         // POST: Departments/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Description,UniversityId")] DepartmentCreateViewModel department)
@@ -92,8 +90,6 @@ namespace Edublock.Controllers
         }
 
         // POST: Departments/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,UniversityId")] DepartmentEditViewModel department)
@@ -144,9 +140,6 @@ namespace Edublock.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DepartmentExists(int id)
-        {
-          return (_context.Departments?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+
     }
 }

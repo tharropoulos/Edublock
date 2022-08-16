@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Edublock.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Edublock.Repositories.IRepositories;
+using Edublock.Repositories.Interfaces;
 using Edublock.Repositories;
 using Edublock.Services;
 using Edublock.Services.Interfaces;

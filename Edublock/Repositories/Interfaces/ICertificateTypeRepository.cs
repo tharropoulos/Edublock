@@ -1,6 +1,6 @@
 ﻿using Edublock.Models;
 
-namespace Edublock.Repositories.IRepositories
+namespace Edublock.Repositories.Interfaces
 {
     public interface ICertificateTypeRepository : IRepository<CertificateType>
     {

@@ -1,5 +1,5 @@
 ﻿using Edublock.Models;
-using Edublock.Repositories.IRepositories;
+using Edublock.Repositories.Interfaces;
 using Edublock.Services.Interfaces;
 using Edublock.ViewModels.Department;
 using Microsoft.EntityFrameworkCore;
