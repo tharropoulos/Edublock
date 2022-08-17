@@ -131,7 +131,8 @@ namespace Edublock.Controllers
             {
                 return NotFound();
             }
-
+            ViewData["DepartmentId"] = new SelectList(_context.Departments, nameof(Department.Id), nameof(Department.Name));
+            ViewData["CertificateTypeId"] = new SelectList(_context.CertificateTypes, nameof(CertificateType.Id), nameof(CertificateType.Name));
             return View(certificate);
         }
 

@@ -115,10 +115,10 @@ namespace Edublock.Services
         }
         public async Task<CertificateEditViewModel> DeleteFromEditViewModel(CertificateEditViewModel editViewModel)
         {
-            var department = await _repository.GetById(editViewModel.Id);
-            if (department != null)
+            var certificate = await _repository.GetById(editViewModel.Id);
+            if (certificate != null)
             {
-                _repository.Delete(department);
+                _repository.Delete(certificate);
             }
             await _repository.Save();
             return editViewModel;
