@@ -16,5 +16,8 @@ namespace Edublock.Models
 
         public int DepartmentId { get; set; }
         public virtual Department Department { get; set; } = default!;
+
+        public int? RequestId { get; set; }
+        public virtual Request Request { get; set; }
     }
 }

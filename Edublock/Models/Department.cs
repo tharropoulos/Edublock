@@ -11,5 +11,7 @@
         public virtual ICollection<Certificate> Certificates { get; set; }
         public virtual ICollection<UserUniversityDepartmentLink> UserUniversityDepartmentLinks { get; set; }
         public virtual ICollection<RequestStatus> RequestStatuses { get; set; }
+        public virtual ICollection<Request> Requests { get; set; }
+
     }
 }
