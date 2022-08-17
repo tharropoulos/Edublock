@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Edublock.Models.Certificate>
+﻿@model IEnumerable<Edublock.ViewModels.Certificate.CertificateListViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,19 +13,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.CertificateType)
+                @Html.DisplayNameFor(model => model.UniversityName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Wallet)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Department)
+                @Html.DisplayNameFor(model => model.DepartmentName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CertificateDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Grade)
+                @Html.DisplayNameFor(model => model.User)
             </th>
             <th></th>
         </tr>
@@ -34,22 +31,18 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.CertificateType.Id)
+                @Html.DisplayFor(modelItem => item.UniversityName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Wallet.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Department.Id)
+                @Html.DisplayFor(modelItem => item.DepartmentName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CertificateDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Grade)
+                @Html.DisplayFor(modelItem => item.User)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>

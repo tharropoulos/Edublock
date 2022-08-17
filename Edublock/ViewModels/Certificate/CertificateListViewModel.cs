@@ -1,11 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Edublock.ViewModels.Certificate
 {
     public class CertificateListViewModel : CertificateBaseViewModel
-    { 
+    {
         public int Id { get; set; }
-        public int DepartmentId { get; set; }
-        public string UniversityThumbnailUrl { get; set; }
+        [DisplayName("Department")]
+        public string DepartmentName { get; set; }
+        [DisplayName("University")]
+        public string UniversityName { get; set; }
+        public string User { get; set; }
     }
 }

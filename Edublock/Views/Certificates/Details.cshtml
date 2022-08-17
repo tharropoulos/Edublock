@@ -1,4 +1,4 @@
-﻿@model Edublock.Models.Certificate
+﻿@model Edublock.ViewModels.Certificate.CertificateDetailsViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -11,22 +11,28 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CertificateType)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CertificateType.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Wallet)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Wallet.Id)
-        </dd>
-        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Department)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Department.Id)
+            @Html.DisplayFor(model => model.Department)
+        </dd>
+                <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.University)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.University)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CertificateType)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CertificateType)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Owner)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Owner)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.CertificateDate)
@@ -43,6 +49,5 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

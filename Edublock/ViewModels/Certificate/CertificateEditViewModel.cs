@@ -6,6 +6,6 @@
         public float Grade { get; set; }
         public int CertificateTypeId { get; set; }
         public int DepartmentId { get; set; }
-        public int WalletId { get; set; }
+        //public int WalletId { get; set; }
     }
 }

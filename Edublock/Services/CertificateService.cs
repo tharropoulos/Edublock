@@ -18,24 +18,25 @@ namespace Edublock.Services
         {
             var certificate = new Certificate
             {
-                DepartmentId = createViewModel.DepartmentId,
-                CertificateDate = createViewModel.CertificateDate,
-                CertificateTypeId = createViewModel.CertificateTypeId,
-                Grade = createViewModel.Grade,
-                WalletId = createViewModel.WalletId
+                    CertificateDate = createViewModel.CertificateDate,
+                    DepartmentId = createViewModel.DepartmentId,
+                    Grade = createViewModel.Grade,
+                    WalletId = createViewModel.WalletId,
+                    CertificateTypeId = createViewModel.CertificateTypeId
             };
             _repository.Add(certificate);
             await _repository.Save();
         }
         public async Task<List<CertificateListViewModel>> ListAllViewModels()
         {
-            var certificateViewModel = (await _repository.GetAll()).Select(c => new CertificateListViewModel
+           var certificateViewModel = await _repository.GetQuery().Include(c => c.Department).Include(c => c.Department.University).Include(c => c.Wallet.ApplicationUser).Select(c => new CertificateListViewModel
             {
                 CertificateDate = c.CertificateDate,
-                DepartmentId = c.DepartmentId,
-                //UniversityName = c.Department.University.Name,
-
-            }).ToList();
+                DepartmentName = c.Department.Name,
+                UniversityName = c.Department.University.Name,
+                User = c.Wallet.ApplicationUser.Email,
+                Id = c.Id
+            }).ToListAsync();
             return certificateViewModel;
         }
         public async Task<CertificateDetailsViewModel> GetDetailsViewModel(int id)
@@ -47,15 +48,13 @@ namespace Edublock.Services
             }
             var certificateDetailsViewModel = new CertificateDetailsViewModel
             {
+                Department  = certificate.Department.Name,
+                University = certificate.Department.University.Name,
                 CertificateDate = certificate.CertificateDate,
-                //CertificateType = certificate.CertificateType.Name,
-                //DepartmentName = certificate.Department.Name,
+                Id = certificate.Id,
+                CertificateType = certificate.CertificateType.Name,
                 Owner = certificate.Wallet.ApplicationUser.Email,
-                Grade = certificate.Grade,
-                //UniversityName = certificate.Department.University.Name,
-                UniversityUrl = certificate.Department.University.ThumbnailUrl,
-                Id = certificate.Id
-
+                Grade = certificate.Grade
             };
             return certificateDetailsViewModel;
         }
@@ -76,10 +75,8 @@ namespace Edublock.Services
                 Grade = certificate.Grade,
                 CertificateDate = certificate.CertificateDate,
                 Id = certificate.Id,
-                //CertificateType = certificate.CertificateType.Name,
+                CertificateTypeId = certificate.CertificateTypeId,
                 DepartmentId = certificate.DepartmentId
-                
-                
             };
             return certificateEditViewModel;
         }
@@ -96,12 +93,10 @@ namespace Edublock.Services
                     return null;
                 }
 
-                editViewModel.CertificateDate = certificate.CertificateDate;
-                editViewModel.Id = certificate.Id;
-                editViewModel.CertificateTypeId = certificate.CertificateTypeId;
-                editViewModel.Grade = certificate.Grade;
-                    
-
+                certificate.Grade = editViewModel.Grade;
+                certificate.CertificateDate = editViewModel.CertificateDate;
+                certificate.CertificateTypeId = editViewModel.CertificateTypeId;
+                certificate.DepartmentId = editViewModel.DepartmentId;
                 _repository.Update(certificate);
                 await _repository.Save();
                 return editViewModel;

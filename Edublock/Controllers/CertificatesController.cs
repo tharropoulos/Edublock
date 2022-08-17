@@ -54,7 +54,7 @@ namespace Edublock.Controllers
         public IActionResult Create()
 
         {
-            ViewData["WalletId"] = new SelectList(_context.Wallets, nameof(Wallet.Id), nameof(Wallet.ApplicationUser.Email));
+            ViewData["WalletId"] = new SelectList(_context.Users, nameof(ApplicationUser.WalletId), nameof(ApplicationUser.Email));
             ViewData["DepartmentId"] = new SelectList(_context.Departments, nameof(Department.Id), nameof(Department.Name));
             ViewData["CertificateTypeId"] = new SelectList(_context.CertificateTypes, nameof(CertificateType.Id), nameof(CertificateType.Name));
             return View();
@@ -65,16 +65,16 @@ namespace Edublock.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CertificateTypeId,DepartmentId,Grade,WalletId,Grade, CertificateDate")] CertificateCreateViewModel certificate)
+        public async Task<IActionResult> Create([Bind("Id, CertificateTypeId,DepartmentId,WalletId, Grade, CertificateDate")] CertificateCreateViewModel certificate)
         {
             if (ModelState.IsValid)
             {
                await _certificateService.CreateFromViewModel(certificate);
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["WalletId"] = new SelectList(_context.Users, nameof(ApplicationUser.WalletId), nameof(ApplicationUser.Email), certificate.WalletId);
             ViewData["DepartmentId"] = new SelectList(_context.Departments, nameof(Department.Id), nameof(Department.Name), certificate.DepartmentId);
             ViewData["CertificateTypeId"] = new SelectList(_context.CertificateTypes, nameof(CertificateType.Id), nameof(CertificateType.Name), certificate.CertificateTypeId);
-            //ViewData["WalletId"] = new SelectList(_context.Wallets, "WalletId", nameof(Wallet.ApplicationUser.LastName), certificate.WalletId);
             return View(certificate);
         }
 
@@ -91,9 +91,8 @@ namespace Edublock.Controllers
             {
                 return NotFound();
             }
-            ViewData["DepartmentId"] = new SelectList(_context.Departments, nameof(Department.Id), nameof(Department.Name), certificate.DepartmentId);
-            ViewData["TypeOfCertificateId"] = new SelectList(_context.CertificateTypes, nameof(CertificateType.Id), nameof(CertificateType.Name), certificate.CertificateTypeId);
-            ViewData["WalletId"] = new SelectList(_context.Wallets, "WalletId", "WalletId", certificate.WalletId);
+            ViewData["DepartmentId"] = new SelectList(_context.Departments, nameof(Department.Id), nameof(Department.Name));
+            ViewData["CertificateTypeId"] = new SelectList(_context.CertificateTypes, nameof(CertificateType.Id), nameof(CertificateType.Name));
             return View(certificate);
         }
 
@@ -102,7 +101,7 @@ namespace Edublock.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Grade,DepartmentId,CertificateTypeId,Grade")] CertificateEditViewModel certificate)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Grade,CertificateTypeId,DepartmentId,Grade")] CertificateEditViewModel certificate)
         {
             if (id != certificate.Id)
             {
@@ -114,9 +113,8 @@ namespace Edublock.Controllers
                 await _certificateService.UpdateFromEditViewModel(certificate);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DepartmentId"] = new SelectList(_context.Departments, "DepartmentId", "DepartmentId", certificate.DepartmentId);
-            ViewData["TypeOfCertificateId"] = new SelectList(_context.CertificateTypes, "TypeOfCertificateId", "TypeOfCertificateId", certificate.CertificateTypeId);
-            ViewData["WalletId"] = new SelectList(_context.Wallets, "WalletId", "WalletId", certificate.WalletId);
+            ViewData["DepartmentId"] = new SelectList(_context.Departments, nameof(Department.Id), nameof(Department.Name), certificate.DepartmentId);
+            ViewData["CertificateTypeId"] = new SelectList(_context.CertificateTypes, nameof(CertificateType.Id), nameof(CertificateType.Name), certificate.CertificateTypeId);
             return View(certificate);
         }
 
