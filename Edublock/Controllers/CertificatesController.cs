@@ -8,39 +8,40 @@ using Microsoft.EntityFrameworkCore;
 using Edublock.Data;
 using Edublock.Models;
 using Edublock.ViewModels.Certificate;
+using Edublock.Services.Interfaces;
 
 namespace Edublock.Controllers
 {
     public class CertificatesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ICertificateService _certificateService;
 
 
-        public CertificatesController(ApplicationDbContext context)
+        public CertificatesController(ICertificateService certificateService, ApplicationDbContext context)
         {
+            _certificateService = certificateService;
             _context = context;
         }
 
         // GET: Certificates
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Certificates.Include(c => c.Department).Include(c => c.CertificateType).Include(c => c.Wallet);
-            return View(await applicationDbContext.ToListAsync());
+            var certificateListViewModel = await _certificateService.ListAllViewModels();
+            return View(certificateListViewModel);
         }
 
         // GET: Certificates/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Certificates == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var certificate = await _context.Certificates
-                .Include(c => c.Department)
-                .Include(c => c.CertificateType)
-                .Include(c => c.Wallet)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var certificate = await _certificateService.GetDetailsViewModel(id.Value);
+            ;
+            
             if (certificate == null)
             {
                 return NotFound();
@@ -53,9 +54,9 @@ namespace Edublock.Controllers
         public IActionResult Create()
 
         {
-            ViewData["UserId"] = new SelectList(_context.Users, nameof(ApplicationUser.Id), nameof(ApplicationUser.Email));
+            ViewData["WalletId"] = new SelectList(_context.Wallets, nameof(Wallet.Id), nameof(Wallet.ApplicationUser.Email));
             ViewData["DepartmentId"] = new SelectList(_context.Departments, nameof(Department.Id), nameof(Department.Name));
-            ViewData["TypeOfCertificateId"] = new SelectList(_context.CertificateTypes, nameof(CertificateType.Id), nameof(CertificateType.Name));
+            ViewData["CertificateTypeId"] = new SelectList(_context.CertificateTypes, nameof(CertificateType.Id), nameof(CertificateType.Name));
             return View();
         }
 
@@ -64,27 +65,15 @@ namespace Edublock.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TypeOfCertificateId,UserId,DepartmentId,CertificateDate,Grade")] CreateCertificateViewModel certificate)
+        public async Task<IActionResult> Create([Bind("CertificateTypeId,DepartmentId,Grade,WalletId,Grade, CertificateDate")] CertificateCreateViewModel certificate)
         {
             if (ModelState.IsValid)
             {
-                // Find the wallet through the owner, because I don't save in owner/users but wallets.
-                var user = await _context.Users.FindAsync(certificate.UserId);
-                var walletId = user.WalletId;
-                var dbCertificate = new Certificate
-                {
-                    DepartmentId = certificate.DepartmentId,
-                    CertificateTypeId = certificate.TypeOfCertificateId,
-                    WalletId = walletId ?? 0,
-                    Grade = certificate.Grade,
-                    CertificateDate = certificate.CertificateDate.ToDateTime(TimeOnly.MinValue),
-                };
-                _context.Add(certificate);
-                await _context.SaveChangesAsync();
+               await _certificateService.CreateFromViewModel(certificate);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["DepartmentId"] = new SelectList(_context.Departments, nameof(Department.Id), nameof(Department.Name), certificate.DepartmentId);
-            ViewData["TypeOfCertificateId"] = new SelectList(_context.CertificateTypes, nameof(CertificateType.Id), nameof(CertificateType.Name), certificate.TypeOfCertificateId);
+            ViewData["CertificateTypeId"] = new SelectList(_context.CertificateTypes, nameof(CertificateType.Id), nameof(CertificateType.Name), certificate.CertificateTypeId);
             //ViewData["WalletId"] = new SelectList(_context.Wallets, "WalletId", nameof(Wallet.ApplicationUser.LastName), certificate.WalletId);
             return View(certificate);
         }
@@ -92,12 +81,12 @@ namespace Edublock.Controllers
         // GET: Certificates/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Certificates == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var certificate = await _context.Certificates.FindAsync(id);
+            var certificate = await _certificateService.GetEditViewModel(id.Value);
             if (certificate == null)
             {
                 return NotFound();
@@ -113,7 +102,7 @@ namespace Edublock.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CertificateId,TypeOfCertificateId,WalletId,DepartmentId,CertificateDate,Grade")] Certificate certificate)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Grade,DepartmentId,CertificateTypeId,Grade")] CertificateEditViewModel certificate)
         {
             if (id != certificate.Id)
             {
@@ -122,22 +111,7 @@ namespace Edublock.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(certificate);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CertificateExists(certificate.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                await _certificateService.UpdateFromEditViewModel(certificate);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["DepartmentId"] = new SelectList(_context.Departments, "DepartmentId", "DepartmentId", certificate.DepartmentId);
@@ -154,11 +128,7 @@ namespace Edublock.Controllers
                 return NotFound();
             }
 
-            var certificate = await _context.Certificates
-                .Include(c => c.Department)
-                .Include(c => c.CertificateType)
-                .Include(c => c.Wallet)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var certificate = await _certificateService.GetEditViewModel(id.Value);
             if (certificate == null)
             {
                 return NotFound();
@@ -170,25 +140,16 @@ namespace Edublock.Controllers
         // POST: Certificates/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, CertificateEditViewModel certificate)
         {
             if (_context.Certificates == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Certificates'  is null.");
+                return NotFound();
             }
-            var certificate = await _context.Certificates.FindAsync(id);
-            if (certificate != null)
-            {
-                _context.Certificates.Remove(certificate);
-            }
-
-            await _context.SaveChangesAsync();
+            await _certificateService.DeleteFromEditViewModel(certificate);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CertificateExists(int id)
-        {
-            return (_context.Certificates?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+        
     }
 }
